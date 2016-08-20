@@ -89,7 +89,7 @@ int main() {
 
   a=b;
 
-  MyStruct c = a + b;
+   MyStruct c = a + b;
 
   MyStruct d(c);
 
