@@ -12,11 +12,11 @@ struct MyStruct {
 
   MyStruct(string name, int x, int y): name(name), x(x), y(y) {}
 
-  // MyStruct(MyStruct const &a) : name(a.name), x(a.x), y(a.y) {
-  //   cout << "copy ctor ";
-  //   print(cout);
-  //   cout << endl;
-  // }
+  MyStruct(MyStruct const &a) : name(a.name), x(a.x), y(a.y) {
+    cout << "copy ctor ";
+    print(cout);
+    cout << endl;
+  }
 
   MyStruct(MyStruct &&a) : name(a.name), x(a.x), y(a.y) {
     cout << "move ctor ";
@@ -69,11 +69,11 @@ int main() {
   MyStruct a("a",5,7);
   MyStruct b("b",4,3);
 
-  a=std::move(b);
+  a=b;
 
-  MyStruct c = std::move(a) + b;
+  MyStruct c = a + b;
 
-  MyStruct d(std::move(c));
+  MyStruct d(c);
 
   cout << a << endl;
   cout << b << endl;
