@@ -1,16 +1,23 @@
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
+
 struct MyStruct {
 
+  unique_ptr<int> original;
   string name;
   int x;
   int y;
 
   MyStruct(): name("default"), x(0), y(0) {}
 
-  MyStruct(string name, int x, int y): name(name), x(x), y(y) {}
+  MyStruct(string name, int x, int y): name(name), x(x), y(y) {
+    cout << "ctor ";
+    print(cout);
+    cout <<endl;
+  }
 
   MyStruct(MyStruct const &a) : name(a.name), x(a.x), y(a.y) {
     cout << "copy ctor ";
@@ -23,6 +30,11 @@ struct MyStruct {
     print(cout);
     cout << endl;
   }
+
+  // void doStuff(unique_ptr<int>&& parameter)
+  //   {
+  //     original = std::move(parameter);
+  //   }
 
   MyStruct& operator=(MyStruct rhs) {
     cout << "assign op" <<endl;
@@ -64,6 +76,12 @@ inline MyStruct operator+(MyStruct lhs, MyStruct const &rhs) {
   return lhs;
 }
 
+MyStruct MakeStruct() {
+  cout <<"Inside MakeStruct" << endl;
+  MyStruct local("local",1,2);
+  return local;
+}
+
 int main() {
 
   MyStruct a("a",5,7);
@@ -78,6 +96,11 @@ int main() {
   cout << a << endl;
   cout << b << endl;
   cout << c << endl;
+
+  cout << "calling MakeStruct..." << endl;
+  MyStruct e(MakeStruct());
+
+  e.print(cout);
 
   return 0;
 }
